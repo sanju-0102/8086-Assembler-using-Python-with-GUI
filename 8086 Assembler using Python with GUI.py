@@ -237,4 +237,79 @@ def compileASM():
     hexfile.truncate()
     hexfile.write(cpu_out)
     hexfile.close()
+    
+    #-------------------------------------GUI incorporated by Samaksh Mittal ----------------------------
+      
+Tk().withdraw()
+frame = Toplevel()
+
+def create_window():
+    window = tk.Toplevel(frame)
+
+    def gui():
+         #-------------------------------------------------LABELS----------------------------------------------
+        browse_song=Label(window,text="GENERAL PURPOSE \n REGISTERS",bg="lawn green",font=('Comic Sans MS',20,'bold'))
+        browse_song.grid(row=0,column=0,padx=10,pady=10,columnspan=4)
+        r=2
+        for i in GPR_Values:
+            L = Label(window,text=i, width=5, fg='blue',font=('Arial',16,'bold'))
+            L.grid(row=r, column=0,columnspan=3)
+            e=Label(window,text=hex(int(GPR_Values[i])), width=5, fg='blue',font=('Arial',16,'bold'))
+            e.grid(row=r, column=1,columnspan=3)
+            r=r+1
+
+        window.status_song=Label(window,text="POINTERS",bg="lawn green",font=('Comic Sans MS',20,'bold'))
+        window.status_song.grid(row=0,column=5,ipadx=5,ipady=5,columnspan=4)
+        r=2
+        for i in Address:
+            if(r<4):
+                L = Label(window,text=i, width=10, fg='blue',font=('Arial',16,'bold'))
+                L.grid(row=r, column=5,columnspan=2)
+                e=Label(window,text='#' + hex(Address[i]) + 'h', width=10, fg='blue',font=('Arial',16,'bold'))
+                e.grid(row=r, column=6,columnspan=3)
+                r=r+1
+        
+        credit=Label(window,text="FLAG REGISTERS",bg="lawn green",font=('Comic Sans MS',20,'bold'))
+        credit.grid(row=11,column=4,padx=0,pady=20,columnspan=6)
+
+        c=0
+        for i in Flage_Registers_Values:
+            L = Label(window,text=i, width=5, fg='blue',font=('Arial',16,'bold'))
+            L.grid(row=12, column=c)
+            e=Label(window,text=Flage_Registers_Values[i], width=5, fg='blue',font=('Arial',16,'bold'))
+            e.grid(row=13, column=c)
+            c=c+1
+
+    window.geometry('800x500+120+150')                # 1200X370 is the dimensions of appication dialog box
+    window.title('Backend Registers')                 # 100 is the margin from left side and 150 is the margin from top
+    window.resizable(0,0)
+    window.configure(bg='gray25')
+    gui()                                            # calling user defined function gui(all the frontend is in this function)
+    window.mainloop()
+
+scrollbar = Scrollbar(frame)
+scrollbar.pack(side = RIGHT, fill = Y)
+frame.title("8086 Assembler [" + filename + "]")
+textArea = Text(frame, height = 30, width = 100, padx = 3, pady = 3, yscrollcommand = scrollbar.set)
+textArea.pack(side=RIGHT)
+scrollbar.config(command=textArea.yview)
+
+menubar = Menu(frame)
+filemenu = Menu(menubar, tearoff=0)
+filemenu.add_command(label="Open", command=openFile)
+filemenu.add_command(label="registervalues",command=create_window)
+filemenu.add_command(label="Save", command=saveFile, state = DISABLED)
+filemenu.add_command(label="Save as...", command=saveFileAs)
+filemenu.add_command(label="Exit", command=exitApp)
+menubar.add_cascade(label="File", menu=filemenu)
+runmenu = Menu(menubar, tearoff=0)
+runmenu.add_command(label="Compile", command=compileASM)
+menubar.add_cascade(label="Run", menu=runmenu)
+frame.config(menu=menubar)
+
+frame.minsize(750, 450)
+frame.maxsize(750, 450)
+frame.mainloop()
+  
+
   
