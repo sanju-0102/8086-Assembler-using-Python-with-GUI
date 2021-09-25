@@ -1,5 +1,5 @@
 # 8086-Assembler-using-Python-with-GUI
-  - This project is implemented in python using Python. 
+  - This project is implemented Python. 
 
 ### Features 
   - Here, The user will be able to write the code in the given space(textbox area), user will be able to save the written code to the selected folder, open the already saved file, edit the old file and save it. 
